@@ -1,13 +1,13 @@
 import os
 from app import create_app
 
+# Read environment (default to development)
+env = os.environ.get("FLASK_ENV", "dev")
+
+# Create Flask application
+app = create_app(env)
+
 def main():
-    # Read environment (default to development)
-    env = os.environ.get("FLASK_ENV", "dev")
-
-    # Create Flask application
-    app = create_app(env)
-
     # Read server port (default 5000)
     port = int(os.environ.get("PORT", 5000))
 
