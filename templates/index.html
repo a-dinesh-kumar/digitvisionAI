@@ -1,0 +1,414 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<!-- Hero Section -->
+<section id="hero" class="hero-section py-5 position-relative overflow-hidden">
+    <div class="hero-bg-gradient position-absolute top-0 start-0 w-100 h-100"></div>
+    <div class="container position-relative z-1 py-4">
+        <div class="row align-items-center g-5">
+            <div class="col-lg-7 text-center text-lg-start" data-aos="fade-right">
+                <span class="badge bg-primary text-white px-3 py-2 rounded-pill fw-semibold mb-3 shadow-sm">
+                    <i class="bi bi-stars me-1"></i> DigitVision AI Model 2026
+                </span>
+                <h1 class="display-4 fw-bold text-dark mb-3 lh-sm">
+                    Handwritten Digit Recognition using <span class="text-gradient">DigitVision AI</span>
+                </h1>
+                <p class="lead text-secondary mb-4 fs-5">
+                    Draw a digit on the interactive canvas or upload an image, and let our Keras Neural Network
+                    recognize it instantly with precision.
+                </p>
+                <div class="d-flex flex-wrap justify-content-center justify-content-lg-start gap-3">
+                    <a href="#predict-section"
+                        class="btn btn-primary btn-lg px-4 py-3 rounded-pill fw-semibold shadow-lg hover-lift">
+                        <i class="bi bi-pencil-fill me-2"></i>Try Studio
+                    </a>
+                    <a href="#about-section"
+                        class="btn btn-outline-secondary btn-lg px-4 py-3 rounded-pill fw-semibold hover-lift">
+                        <i class="bi bi-book-fill me-2"></i>Learn More
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-5 text-center" data-aos="fade-left">
+                <div class="hero-card-glass p-4 rounded-4 shadow-lg position-relative border">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <div class="d-flex gap-2">
+                            <span class="dot bg-danger"></span>
+                            <span class="dot bg-warning"></span>
+                            <span class="dot bg-success"></span>
+                        </div>
+                        <small class="text-muted font-monospace"><i
+                                class="bi bi-lightning-charge-fill text-warning me-1"></i>Live Neural Inference</small>
+                    </div>
+                    <div
+                        class="hero-demo-box bg-dark rounded-3 p-4 text-white d-flex flex-column align-items-center justify-content-center shadow-inner">
+                        <div class="digit-preview-demo display-1 fw-bold text-gradient-accent">8</div>
+                        <span class="badge bg-success-subtle text-success rounded-pill px-3 py-1 mt-2">
+                            <i class="bi bi-check-circle-fill me-1"></i>Confidence: 99.85%
+                        </span>
+                    </div>
+                    <div class="d-flex justify-content-around mt-3 pt-2 border-top fs-6 text-secondary">
+                        <span><i class="bi bi-cpu text-primary me-1"></i>TensorFlow</span>
+                        <span><i class="bi bi-layers text-purple me-1"></i>Flask API</span>
+                        <span><i class="bi bi-speedometer2 text-info me-1"></i>&lt;15ms</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Main Prediction Section -->
+<section id="predict-section" class="py-5 bg-body-tertiary">
+    <div class="container">
+        <div class="text-center mb-5" data-aos="fade-up">
+            <h2 class="fw-bold text-gradient">DigitVision AI Studio</h2>
+            <p class="text-secondary fs-5">Choose canvas drawing mode or file upload mode to start prediction.</p>
+        </div>
+
+        <div class="row g-4 justify-content-center">
+            <!-- Left Workstation: Canvas / Upload Tabs -->
+            <div class="col-lg-7" data-aos="fade-right">
+                <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
+                    <div class="card-header bg-body p-3 border-bottom">
+                        <ul class="nav nav-pills nav-justified custom-pills" id="inputTabs" role="tablist">
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link active rounded-pill fw-semibold py-2" id="canvas-tab"
+                                    data-bs-toggle="pill" data-bs-target="#canvas-pane" type="button" role="tab">
+                                    <i class="bi bi-vector-pen me-2"></i>Draw Digit
+                                </button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link rounded-pill fw-semibold py-2" id="upload-tab"
+                                    data-bs-toggle="pill" data-bs-target="#upload-pane" type="button" role="tab">
+                                    <i class="bi bi-cloud-arrow-up-fill me-2"></i>Upload Image
+                                </button>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="card-body p-4">
+                        <div class="tab-content" id="inputTabsContent">
+
+                            <!-- TAB 1: DRAW CANVAS -->
+                            <div class="tab-pane fade show active" id="canvas-pane" role="tabpanel">
+                                <div class="d-flex flex-column align-items-center">
+
+                                    <!-- Canvas Wrapper -->
+                                    <div
+                                        class="canvas-container position-relative mb-3 rounded-4 shadow-sm border border-secondary border-opacity-25 overflow-hidden">
+                                        <canvas id="digitCanvas" width="320" height="320"
+                                            class="bg-dark cursor-crosshair"></canvas>
+                                        <!-- <div
+                                            class="canvas-badge position-absolute top-0 start-0 m-2 bg-dark bg-opacity-75 text-white px-2 py-1 rounded small">
+                                            <i class="bi bi-aspect-ratio me-1"></i>320 × 320
+                                        </div> -->
+                                    </div>
+
+                                    <!-- Canvas Controls Toolbar -->
+                                    <div class="toolbar-controls w-100 p-3 bg-body-tertiary rounded-3 mb-4 shadow-sm">
+                                        <div class="row g-3 align-items-center">
+                                            <div class="col-md-6">
+                                                <label for="brushSize"
+                                                    class="form-label small fw-semibold d-flex justify-content-between mb-1">
+                                                    <span><i class="bi bi-paint-bucket me-1"></i>Brush Thickness</span>
+                                                    <span id="brushSizeVal"
+                                                        class="text-primary font-monospace">18px</span>
+                                                </label>
+                                                <input type="range" class="form-range" id="brushSize" min="6" max="36"
+                                                    value="18">
+                                            </div>
+                                            <div class="col-md-6 d-flex gap-2 justify-content-md-end">
+                                                <button id="undoBtn"
+                                                    class="btn btn-outline-secondary btn-sm rounded-pill"
+                                                    title="Undo Stroke">
+                                                    <i class="bi bi-arrow-counterclockwise me-1"></i>Undo
+                                                </button>
+                                                <button id="clearCanvasBtn"
+                                                    class="btn btn-outline-danger btn-sm rounded-pill"
+                                                    title="Clear Canvas">
+                                                    <i class="bi bi-trash-fill me-1"></i>Clear
+                                                </button>
+                                                <button id="downloadCanvasBtn"
+                                                    class="btn btn-outline-primary btn-sm rounded-pill"
+                                                    title="Download Image">
+                                                    <i class="bi bi-download me-1"></i>Save
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Action Button -->
+                                    <button id="predictCanvasBtn"
+                                        class="btn btn-primary btn-lg w-100 rounded-pill fw-bold shadow hover-lift py-3">
+                                        <i class="bi bi-cpu-fill me-2"></i>Predict Canvas Digit
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- TAB 2: UPLOAD IMAGE -->
+                            <div class="tab-pane fade" id="upload-pane" role="tabpanel">
+                                <div class="d-flex flex-column align-items-center">
+
+                                    <!-- Hidden File Input -->
+                                    <input type="file" id="fileInput" name="file" class="visually-hidden"
+                                        accept="image/png, image/jpeg, image/jpg">
+
+                                    <!-- Drag & Drop Zone -->
+                                    <div id="dropZone"
+                                        class="drop-zone w-100 p-4 rounded-4 border-2 border-dashed text-center position-relative mb-3 cursor-pointer">
+                                        <div class="drop-zone-content mx-auto">
+                                            <div id="dropZonePrompt" class="px-3 py-4">
+                                                <i class="bi bi-cloud-arrow-up display-3 text-primary mb-3"></i>
+                                                <h5 class="fw-semibold mb-1">Drag & Drop Your Digit Image Here</h5>
+                                                <p class="text-secondary small mb-3">Only JPG, JPEG, PNG files. Max 5MB.</p>
+                                                <button type="button" id="browseFileBtn"
+                                                    class="btn btn-outline-primary btn-sm rounded-pill px-4 py-2">
+                                                    <i class="bi bi-folder2-open me-1"></i>Browse Files
+                                                </button>
+                                            </div>
+
+                                            <!-- Image Preview Container -->
+                                            <div id="imagePreviewContainer" class="d-none position-relative text-center">
+                                                <div class="image-preview-card rounded-4 shadow-sm overflow-hidden mb-3">
+                                                    <img id="previewImg" src="" alt="Upload Preview"
+                                                        class="img-fluid w-100">
+                                                </div>
+                                                <div class="file-meta-info mb-3">
+                                                    <span id="fileName" class="fw-medium text-dark">filename.png</span>
+                                                    <span id="fileSize" class="badge bg-secondary ms-2">0 KB</span>
+                                                </div>
+                                                <div class="d-flex justify-content-center gap-2">
+                                                    <button type="button" id="replaceFileBtn"
+                                                        class="btn btn-sm btn-outline-secondary rounded-pill">
+                                                        <i class="bi bi-arrow-repeat me-1"></i>Replace File
+                                                    </button>
+                                                    <button type="button" id="removeFileBtn"
+                                                        class="btn btn-sm btn-outline-danger rounded-pill">
+                                                        <i class="bi bi-x-circle-fill me-1"></i>Remove
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Action Button -->
+                                    <button id="predictUploadBtn"
+                                        class="btn btn-primary btn-lg w-100 rounded-pill fw-bold shadow hover-lift py-3"
+                                        disabled>
+                                        <i class="bi bi-magic me-2"></i>Predict Uploaded Image
+                                    </button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column: Prediction Results Card -->
+            <div class="col-lg-5" data-aos="fade-left">
+                <div class="card border-0 shadow-sm rounded-4 h-100 overflow-hidden">
+                    <div
+                        class="card-header bg-body p-3 border-bottom d-flex justify-content-between align-items-center">
+                        <h5 class="card-title fw-bold m-0"><i
+                                class="bi bi-bar-chart-fill text-primary me-2"></i>Prediction Result</h5>
+                        <span id="latencyBadge"
+                            class="badge bg-info-subtle text-info font-monospace rounded-pill d-none">
+                            <i class="bi bi-clock me-1"></i><span id="latencyVal">0</span> ms
+                        </span>
+                    </div>
+
+                    <div class="card-body p-4 d-flex flex-column align-items-center justify-content-center text-center">
+
+                        <!-- Empty State -->
+                        <div id="resultEmptyState" class="py-5 my-auto">
+                            <i class="bi bi-cpu text-secondary opacity-50 display-1 mb-3"></i>
+                            <h5 class="text-secondary fw-medium">No Prediction Yet</h5>
+                            <p class="text-muted small">Draw a digit or upload an image and click predict.</p>
+                        </div>
+
+                        <!-- Spinner Loading State -->
+                        <div id="resultSpinnerState" class="d-none py-5 my-auto">
+                            <div class="spinner-border text-primary custom-spinner mb-3" role="status"
+                                style="width: 3.5rem; height: 3.5rem;">
+                                <span class="visually-hidden">Analyzing Digit...</span>
+                            </div>
+                            <h5 class="fw-semibold text-primary">Analyzing Neural Features...</h5>
+                            <p class="text-secondary small">Preprocessing image & running inference</p>
+                        </div>
+
+                        <!-- Active Prediction Result View -->
+                        <div id="resultActiveState" class="w-100 d-none">
+
+                            <!-- Low Confidence Warning -->
+                            <div id="lowConfidenceAlert"
+                                class="alert alert-warning border-0 shadow-sm rounded-3 d-none mb-3 text-start">
+                                <i class="bi bi-exclamation-triangle-fill me-2 fs-5"></i>
+                                <span><strong>Warning:</strong> AI isn't fully confident (<70%). Try drawing the digit
+                                        more clearly.</span>
+                            </div>
+
+                            <!-- Main Predicted Digit -->
+                            <div
+                                class="prediction-box bg-dark rounded-4 p-4 text-white mb-4 shadow position-relative overflow-hidden">
+                                <span
+                                    class="text-secondary text-uppercase small font-monospace tracking-wider">Predicted
+                                    Digit</span>
+                                <div id="predictedDigitDisplay"
+                                    class="display-1 fw-extrabold text-gradient-accent my-2">7</div>
+
+                                <!-- Radial Confidence Indicator -->
+                                <div class="d-flex align-items-center justify-content-center gap-2">
+                                    <span class="fs-6 text-light opacity-75">Confidence:</span>
+                                    <span id="predictedConfidenceVal"
+                                        class="fs-4 fw-bold text-success font-monospace">99.32%</span>
+                                </div>
+                            </div>
+
+                            <!-- Confidence Meter Bar -->
+                            <div class="mb-4 text-start">
+                                <div class="d-flex justify-content-between small fw-semibold mb-1">
+                                    <span>Certainty Level</span>
+                                    <span id="confidenceBarText" class="text-primary font-monospace">99.32%</span>
+                                </div>
+                                <div class="progress rounded-pill shadow-inner" style="height: 12px;">
+                                    <div id="confidenceProgressBar"
+                                        class="progress-bar bg-gradient-primary rounded-pill transition-all"
+                                        role="progressbar" style="width: 0%;"></div>
+                                </div>
+                            </div>
+
+                            <!-- Probability Distribution Breakdown -->
+                            <div class="text-start">
+                                <h6 class="fw-bold mb-3 d-flex justify-content-between align-items-center">
+                                    <span><i class="bi bi-pie-chart-fill text-primary me-2"></i>Class
+                                        Probabilities</span>
+                                    <small class="text-muted font-monospace">0 - 9</small>
+                                </h6>
+                                <div id="probabilityDistribution" class="probability-list gap-2">
+                                    <!-- Rendered dynamically by app.js -->
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- Prediction History Section -->
+<section id="history-section" class="py-5">
+    <div class="container">
+        <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-4"
+            data-aos="fade-up">
+            <div>
+                <h3 class="fw-bold text-gradient mb-1"><i class="bi bi-clock-history me-2 text-primary"></i>Prediction
+                    History</h3>
+                <p class="text-secondary small mb-0">Saved locally (Last 10 inference sessions)</p>
+            </div>
+            <div class="mt-3 mt-md-0">
+                <button id="clearHistoryBtn" class="btn btn-outline-danger btn-sm rounded-pill">
+                    <i class="bi bi-trash-fill me-1"></i>Clear History
+                </button>
+            </div>
+        </div>
+
+        <div class="card border-0 shadow-sm rounded-4 overflow-hidden" data-aos="fade-up">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0" id="historyTable">
+                    <thead class="table-light">
+                        <tr>
+                            <th scope="col" class="ps-4">Thumbnail</th>
+                            <th scope="col">Predicted Digit</th>
+                            <th scope="col">Confidence</th>
+                            <th scope="col">Source</th>
+                            <th scope="col">Timestamp</th>
+                            <th scope="col" class="text-end pe-4">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="historyTableBody">
+                        <!-- Rendered dynamically by app.js -->
+                    </tbody>
+                </table>
+            </div>
+            <div id="historyEmptyMsg" class="text-center py-4 text-secondary">
+                <i class="bi bi-inbox fs-3 d-block mb-1"></i>
+                No history records found.
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Educational / About Section -->
+<section id="about-section" class="py-5 bg-body-tertiary">
+    <div class="container">
+        <div class="text-center mb-5" data-aos="fade-up">
+            <h2 class="fw-bold text-gradient">How DigitVision AI Works</h2>
+            <p class="text-secondary fs-5">Understanding the deep learning pipeline behind handwritten digit
+                recognition.</p>
+        </div>
+
+        <div class="row g-4">
+            <!-- Card 1: What is MNIST -->
+            <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="100">
+                <div class="card border-0 shadow-sm rounded-4 h-100 hover-lift p-4 text-center">
+                    <div class="icon-circle bg-primary-subtle text-primary mx-auto mb-3">
+                        <i class="bi bi-database-fill fs-3"></i>
+                    </div>
+                    <h5 class="fw-bold">1. MNIST Dataset</h5>
+                    <p class="text-secondary small mb-0">
+                        70,000 benchmark images of handwritten digits (0–9) collected by MNIST. Standardized to 28x28
+                        grayscale format.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Card 2: Preprocessing -->
+            <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="200">
+                <div class="card border-0 shadow-sm rounded-4 h-100 hover-lift p-4 text-center">
+                    <div class="icon-circle bg-info-subtle text-info mx-auto mb-3">
+                        <i class="bi bi-sliders fs-3"></i>
+                    </div>
+                    <h5 class="fw-bold">2. Image Preprocessing</h5>
+                    <p class="text-secondary small mb-0">
+                        Images are grayscale converted, auto-inverted if light-backgrounded, anti-alias resized to
+                        28x28, and normalized (x/255).
+                    </p>
+                </div>
+            </div>
+
+            <!-- Card 3: Neural Network Architecture -->
+            <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="300">
+                <div class="card border-0 shadow-sm rounded-4 h-100 hover-lift p-4 text-center">
+                    <div class="icon-circle bg-purple-subtle text-purple mx-auto mb-3">
+                        <i class="bi bi-diagram-3-fill fs-3"></i>
+                    </div>
+                    <h5 class="fw-bold">3. Neural Architecture</h5>
+                    <p class="text-secondary small mb-0">
+                        Sequential network with Flatten layer, 256-neuron & 128-neuron ReLU hidden layer, and 10-neuron Softmax
+                        output layer.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Card 4: Softmax Prediction -->
+            <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="400">
+                <div class="card border-0 shadow-sm rounded-4 h-100 hover-lift p-4 text-center">
+                    <div class="icon-circle bg-success-subtle text-success mx-auto mb-3">
+                        <i class="bi bi-check2-circle fs-3"></i>
+                    </div>
+                    <h5 class="fw-bold">4. Softmax Inference</h5>
+                    <p class="text-secondary small mb-0">
+                        Computes probability distribution across all 10 digit classes. Selecting class with highest
+                        probability.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

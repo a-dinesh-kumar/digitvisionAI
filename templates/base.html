@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DigitVision AI | Handwritten Digit Recognition</title>
+    <meta name="description"
+        content="Draw it. Upload it. Let AI Recognize It. Enterprise-grade handwritten digit recognition powered by DigitVision AI with Keras & TensorFlow.">
+    <meta name="theme-color" content="#2563eb">
+
+    <!-- Google Fonts: Poppins -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <!-- Bootstrap 5.3 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <!-- AOS Animations -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body class="bg-light-subtle text-body">
+
+    <!-- Sticky Glassmorphism Navbar -->
+    <nav class="navbar navbar-expand-lg sticky-top custom-navbar shadow-sm backdrop-blur">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center gap-2 fw-bold fs-4 text-gradient" href="#hero">
+                <i class="bi bi-cpu-fill fs-3 text-primary"></i>
+                <span>DigitVision AI
+                    <!-- <span class="badge bg-primary-subtle text-primary rounded-pill fs-6 border border-primary-subtle">AI</span> -->
+                </span>
+            </a>
+
+            <button class="navbar-toggler border-0 shadow-none" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto align-items-center gap-3">
+                    <li class="nav-item">
+                        <a class="nav-link fw-medium active" href="/"><i class="bi bi-house-door me-1"></i>Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link fw-medium" href="#predict-section"><i
+                                class="bi bi-magic me-1"></i>Predict</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link fw-medium" href="#history-section"><i
+                                class="bi bi-clock-history me-1"></i>History</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link fw-medium" href="#about-section"><i
+                                class="bi bi-info-circle me-1"></i>About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link fw-medium" href="https://github.com/a-dinesh-kumar" target="_blank"
+                            rel="noopener"><i class="bi bi-github me-1"></i>GitHub</a>
+                    </li>
+                    <li class="nav-item ms-lg-2">
+                        <button id="themeToggleBtn"
+                            class="btn btn-outline-secondary rounded-circle theme-toggle-btn p-2" title="Toggle Theme">
+                            <i class="bi bi-moon-stars-fill" id="themeIcon"></i>
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Dynamic Content -->
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Premium Footer -->
+    <footer class="footer mt-5 pt-5 pb-4 border-top bg-body-tertiary">
+        <div class="container">
+            <div class="row g-4 align-items-center">
+                <div class="col-md-6 text-center text-md-start">
+                    <h5 class="fw-bold text-gradient mb-2">DigitVision AI</h5>
+                    <p class="text-secondary small mb-0">Draw it. Upload it. Let AI Recognize It. Next-gen deep learning
+                        vision suite.</p>
+                </div>
+                <div class="col-md-6 text-center text-md-end">
+                    <div class="d-flex justify-content-center justify-content-md-end gap-3 fs-5 mb-2">
+                        <a href="https://github.com" class="text-secondary hover-primary" title="GitHub"><i
+                                class="bi bi-github"></i></a>
+                        <a href="https://linkedin.com" class="text-secondary hover-primary" title="LinkedIn"><i
+                                class="bi bi-linkedin"></i></a>
+                        <a href="mailto:contact@digitvision.ai" class="text-secondary hover-primary" title="Email"><i
+                                class="bi bi-envelope-fill"></i></a>
+                    </div>
+                    <p class="text-secondary small mb-0">&copy; 2026 DigitVision AI. Built with <span
+                            class="text-danger">Flask ❤️ TensorFlow</span>.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap 5 JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/bootstrap.bundle.min.js"></script>
+    <!-- AOS Animation Library -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <!-- Custom JS -->
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+
+</html>

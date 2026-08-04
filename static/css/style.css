@@ -1,0 +1,259 @@
+/* ==========================================
+   MNIST AI - Custom Production Stylesheet
+   ========================================== */
+
+:root {
+    --primary-color: #2563eb;
+    --secondary-color: #7c3aed;
+    --accent-color: #06b6d4;
+    --dark-color: #0f172a;
+    --bg-light: #f8fafc;
+    --success-color: #22c55e;
+    --warning-color: #f59e0b;
+    --danger-color: #ef4444;
+    --font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+body {
+    font-family: var(--font-family);
+    scroll-behavior: smooth;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* --- Gradient & Glassmorphism Utilities --- */
+.text-gradient {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.text-gradient-accent {
+    background: linear-gradient(135deg, #60a5fa, #c084fc);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.bg-gradient-primary {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)) !important;
+}
+
+.backdrop-blur {
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+}
+
+.custom-navbar {
+    background-color: rgba(255, 255, 255, 0.85);
+    transition: background-color 0.3s ease;
+}
+
+[data-bs-theme="dark"] .custom-navbar {
+    background-color: rgba(15, 23, 42, 0.85);
+}
+
+/* --- Hero Section & Animations --- */
+.hero-section {
+    min-height: 80vh;
+    display: flex;
+    align-items: center;
+}
+
+.hero-bg-gradient {
+    background: radial-gradient(circle at 10% 20%, rgba(37, 99, 235, 0.08) 0%, rgba(124, 58, 237, 0.05) 90%);
+    pointer-events: none;
+}
+
+.hero-card-glass {
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+[data-bs-theme="dark"] .hero-card-glass {
+    background: rgba(30, 41, 59, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.shadow-inner {
+    box-shadow: inset 0 2px 4px 0 rgba(0, 0, 0, 0.25);
+}
+
+/* --- Hover Lift Micro-animation --- */
+.hover-lift {
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.hover-lift:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 24px -6px rgba(37, 99, 235, 0.2) !important;
+}
+
+/* --- Canvas & Studio --- */
+.canvas-container {
+    width: 320px;
+    height: 320px;
+    background-color: #000000;
+    touch-action: none;
+}
+
+#digitCanvas {
+    display: block;
+    width: 320px;
+    height: 320px;
+    background-color: #000000;
+    border-radius: 1rem;
+}
+
+.cursor-crosshair {
+    cursor: crosshair;
+}
+
+.cursor-pointer {
+    cursor: pointer;
+}
+
+/* Drop Zone */
+.drop-zone {
+    border: 2px dashed rgba(37, 99, 235, 0.4);
+    background-color: rgba(37, 99, 235, 0.02);
+    transition: all 0.3s ease;
+    min-height: 280px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+}
+
+.drop-zone.drag-over {
+    border-color: var(--primary-color);
+    background-color: rgba(37, 99, 235, 0.08);
+    transform: scale(1.01);
+}
+
+.drop-zone .drop-zone-content {
+    width: 100%;
+    max-width: 420px;
+}
+
+.drop-zone .drop-zone-content h5,
+.drop-zone .drop-zone-content p {
+    margin: 0;
+}
+
+.drop-zone .btn {
+    min-width: 150px;
+}
+
+.drop-zone .btn-outline-primary {
+    border-color: rgba(37, 99, 235, 0.6);
+    color: rgba(37, 99, 235, 1);
+}
+
+.drop-zone .btn-outline-primary:hover {
+    background-color: rgba(37, 99, 235, 0.08);
+}
+
+.image-preview-card {
+    max-width: 100%;
+    border-radius: 1rem;
+    overflow: hidden;
+}
+
+.image-preview-card img {
+    display: block;
+    width: 100%;
+    height: auto;
+    background: #ffffff;
+}
+
+.max-h-250 {
+    max-height: 220px;
+    object-fit: contain;
+}
+
+/* --- Prediction Display --- */
+.fw-extrabold {
+    font-weight: 800;
+}
+
+.prediction-box {
+    animation: zoomIn 0.3s ease;
+}
+
+@keyframes zoomIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.transition-all {
+    transition: all 0.5s ease-in-out;
+}
+
+/* Class Probability Row */
+.prob-row {
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+.prob-bar-bg {
+    height: 8px;
+    background-color: rgba(0, 0, 0, 0.06);
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+[data-bs-theme="dark"] .prob-bar-bg {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.prob-bar-fill {
+    height: 100%;
+    background-color: var(--primary-color);
+    border-radius: 4px;
+    transition: width 0.4s ease;
+}
+
+.prob-bar-fill.active-top {
+    background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+}
+
+/* Icon Circle */
+.icon-circle {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.text-purple {
+    color: #7c3aed !important;
+}
+
+.bg-purple-subtle {
+    background-color: rgba(124, 58, 237, 0.15) !important;
+}
+
+/* Theme Toggle Button */
+.theme-toggle-btn {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
